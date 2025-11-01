@@ -5,7 +5,9 @@ const data = Mock.mock({
     id: '@increment',
     name: '@ctitle(5, 10)',
     description: '@cparagraph(1, 3)',
-    create_time: '@datetime'
+    create_time: '@datetime',
+    maleCount: '@integer(10, 30)', // 随机生成男生数量
+    femaleCount: '@integer(10, 30)' // 随机生成女生数量
   }]
 })
 
