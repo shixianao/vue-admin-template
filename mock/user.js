@@ -1,4 +1,28 @@
 
+const Mock = require('mockjs')
+
+// Mock班级数据（用于用户关联）
+const classes = Mock.mock({
+  'classes|10': [{ 
+    id: '@increment',
+    name: '@ctitle(5, 10)',
+    description: '@cparagraph(1, 3)',
+    create_time: '@datetime'
+  }]
+})
+
+// Mock用户数据
+const usersData = Mock.mock({
+  'users|50': [{ 
+    id: '@increment',
+    name: '@cname',
+    classId: '@integer(1, 10)', // 关联班级ID
+    email: '@email',
+    phone: '@phone',
+    create_time: '@datetime'
+  }]
+})
+
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -78,6 +102,93 @@ module.exports = [
       return {
         code: 20000,
         data: 'success'
+      }
+    }
+  },
+
+  // get user list
+  {
+    url: '/vue-admin-template/user/list',
+    type: 'get',
+    response: config => {
+      const { page = 1, limit = 20 } = config.query
+      const startIndex = (page - 1) * limit
+      const endIndex = page * limit
+      const total = usersData.users.length
+      const items = usersData.users.slice(startIndex, endIndex)
+
+      // 关联班级名称
+      const usersWithClass = items.map(user => {
+        const className = classes.classes.find(c => c.id === user.classId)?.name || '未分配班级'
+        return { ...user, className }
+      })
+
+      return {
+        code: 20000,
+        data: {
+          total,
+          items: usersWithClass
+        }
+      }
+    }
+  },
+
+  // create user
+  {
+    url: '/vue-admin-template/user/create',
+    type: 'post',
+    response: config => {
+      const newUser = config.body
+      newUser.id = usersData.users.length + 1
+      newUser.create_time = Mock.mock('@datetime')
+      usersData.users.push(newUser)
+      return {
+        code: 20000,
+        data: newUser
+      }
+    }
+  },
+
+  // update user
+  {
+    url: '/vue-admin-template/user/update',
+    type: 'post',
+    response: config => {
+      const updatedUser = config.body
+      const index = usersData.users.findIndex(u => u.id === updatedUser.id)
+      if (index !== -1) {
+        usersData.users[index] = updatedUser
+        return {
+          code: 20000,
+          data: updatedUser
+        }
+      } else {
+        return {
+          code: 50000,
+          message: '用户不存在'
+        }
+      }
+    }
+  },
+
+  // delete user
+  {
+    url: '/vue-admin-template/user/delete/:id',
+    type: 'post',
+    response: config => {
+      const id = parseInt(config.params.id)
+      const index = usersData.users.findIndex(u => u.id === id)
+      if (index !== -1) {
+        usersData.users.splice(index, 1)
+        return {
+          code: 20000,
+          data: { success: true }
+        }
+      } else {
+        return {
+          code: 50000,
+          message: '用户不存在'
+        }
       }
     }
   }
