@@ -197,6 +197,24 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
+  { 
+    path: '/analysis',
+    component: Layout,
+    redirect: '/analysis/index',
+    name: 'Analysis',
+    meta: {
+      title: '统计分析',
+      icon: 'el-icon-data-analysis'
+    },
+    children: [
+      { 
+        path: 'index',
+        name: 'AnalysisIndex',
+        component: () => import('@/views/analysis/index'),
+        meta: { title: '统计分析', icon: 'el-icon-data-analysis' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true } ]
 
 const createRouter = () => new Router({

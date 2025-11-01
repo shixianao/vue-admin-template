@@ -19,6 +19,7 @@ const usersData = Mock.mock({
     classId: '@integer(1, 10)', // 关联班级ID
     email: '@email',
     phone: '@phone',
+    sex: '@integer(0, 1) === 0 ? "男" : "女"', // 随机生成性别
     create_time: '@datetime'
   }]
 })
