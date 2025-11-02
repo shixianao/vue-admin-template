@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 读取文件内容
-const filePath = path.join(__dirname, 'mock', 'Untitled-2.groovy');
+const filePath = path.join(__dirname, 'Untitled-2.ini');
 fs.readFile(filePath, 'utf8', (err, data) => {
   if (err) {
     console.error('读取文件失败:', err);
