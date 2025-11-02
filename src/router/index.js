@@ -161,6 +161,32 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
+  {
+    path: '/goods',
+    component: Layout,
+    redirect: '/goods/list',
+    name: 'Goods',
+    meta: {
+      title: '二手物品',
+      icon: 'el-icon-shopping-cart-2'
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'GoodsList',
+        component: () => import('@/views/goods/list'),
+        meta: { title: '物品列表', icon: 'list' }
+      },
+      {
+        path: 'publish',
+        name: 'GoodsPublish',
+        component: () => import('@/views/goods/publish'),
+        meta: { title: '发布物品', icon: 'plus' }
+      }
+    ]
+  },
+
+  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 

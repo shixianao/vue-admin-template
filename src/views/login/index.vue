@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">校园二手物品交易平台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -129,9 +129,9 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
+$bg:#eaf2f8;
+$light_gray:#333;
+$cursor: #409EFF;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -158,14 +158,14 @@ $cursor: #fff;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        -webkit-text-fill-color: $light_gray !important;
       }
     }
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(64, 158, 255, 0.2);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 5px;
     color: #454545;
   }
@@ -173,7 +173,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#eaf2f8;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
@@ -181,6 +181,7 @@ $light_gray:#eee;
   min-height: 100%;
   width: 100%;
   background-color: $bg;
+  background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
   overflow: hidden;
 
   .login-form {
