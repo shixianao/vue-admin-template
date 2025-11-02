@@ -43,6 +43,11 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
+      <el-button type="info" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleWechatLogin">
+        <svg-icon icon-class="wechat" style="margin-right:8px;" />
+        微信登录
+      </el-button>
+
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
@@ -54,6 +59,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import request from '@/utils/request'
 
 export default {
   name: 'Login',
@@ -119,6 +125,29 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    handleWechatLogin() {
+      // 模拟微信登录流程
+      // 实际项目中，这里应该跳转到微信授权页面
+      console.log('微信登录按钮点击')
+
+      // 模拟微信授权后返回的code
+      const mockCode = 'wechat_auth_code_123456'
+
+      // 调用后端接口，用code换取token
+      request.get(`/api/wechat/login?code=${mockCode}`).then(response => {
+        const { data } = response
+
+        // 将token存储到Cookies
+        this.$store.commit('user/SET_TOKEN', data.token)
+        this.$store.dispatch('user/getInfo').then(() => {
+          // 跳转到首页
+          this.$router.push({ path: this.redirect || '/' })
+        })
+      }).catch(error => {
+        console.error('微信登录失败:', error)
+        this.$message.error('微信登录失败，请重试')
       })
     }
   }

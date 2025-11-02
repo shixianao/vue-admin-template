@@ -5,6 +5,9 @@ const tokens = {
   },
   editor: {
     token: 'editor-token'
+  },
+  wechat: {
+    token: 'wechat-token'
   }
 }
 
@@ -20,6 +23,12 @@ const users = {
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Editor'
+  },
+  'wechat-token': {
+    roles: ['editor'],
+    introduction: 'I am a WeChat user',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'WeChat User'
   }
 }
 
@@ -78,6 +87,31 @@ module.exports = [
       return {
         code: 20000,
         data: 'success'
+      }
+    }
+  },
+  
+  // wechat login
+  {
+    url: '/api/wechat/login',
+    type: 'get',
+    response: config => {
+      const { code } = config.query
+      
+      // mock error
+      if (!code) {
+        return {
+          code: 60204,
+          message: '微信授权失败'
+        }
+      }
+      
+      // mock success
+      return {
+        code: 20000,
+        data: {
+          token: 'wechat-token'
+        }
       }
     }
   }
