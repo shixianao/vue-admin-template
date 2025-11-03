@@ -90,7 +90,43 @@ export const constantRoutes = [
     ]
   },
 
-  {
+  { 
+    path: '/class',
+    component: Layout,
+    redirect: '/class/list',
+    name: 'Class',
+    meta: {
+      title: '班级管理',
+      icon: 'el-icon-s-grid'
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'ClassList',
+        component: () => import('@/views/class/index'),
+        meta: { title: '班级列表', icon: 'table' }
+      }
+    ]
+  },
+  { 
+    path: '/user',
+    component: Layout,
+    redirect: '/user/list',
+    name: 'User',
+    meta: {
+      title: '用户管理',
+      icon: 'el-icon-user'
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'UserList',
+        component: () => import('@/views/user/index'),
+        meta: { title: '用户列表', icon: 'table' }
+      }
+    ]
+  },
+  { 
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
@@ -161,8 +197,7 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+  { path: '*', redirect: '/404', hidden: true } ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
